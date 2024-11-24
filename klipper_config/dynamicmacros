@@ -1,0 +1,92 @@
+[dynamicmacros]
+configs: macros.cfg # You can add more files to this list, separated by commas.
+
+#########################################################################
+#  Homing Macros (Coordinated Movement to Bed Center)
+#########################################################################
+
+# macros.cfg
+
+#####################################################################
+#  Homing Macros (Coordinated Movement to Bed Center)
+#####################################################################
+
+#####################################################################
+#  Additional Macros
+#####################################################################
+
+# Example: Filament Change Macro
+#[gcode_macro FILAMENT_CHANGE]
+#description: "Filament change sequence"
+#gcode:
+#    PAUSE
+#    ; Add filament change steps here
+#    RESUME
+
+# Example: Resume Macro
+#[gcode_macro RESUME]
+#description: "Resume print after pause"
+#gcode:
+#    M117 "Resuming print..."
+#    ; Add steps to resume print here
+
+
+#[gcode_macro EXCLUDE_OBJECT]
+#description: "Macro to exclude failed objects during multi-object prints"
+#variable_name: ""
+#gcode:
+#    # Check if object name was provided
+#    {% if name == "" %}
+#        {action_respond_info("ERROR: No object name provided! Usage: EXCLUDE_OBJECT NAME=<object_name>")}
+#        {action_raise_error("No object name provided for EXCLUDE_OBJECT")}
+#    {% else %}
+#        # Attempt to exclude the specified object
+#        EXCLUDE_OBJECT NAME={name}
+#        {action_respond_info("Object named '{name}' has been excluded from the print")}
+#    {% endif %}
+
+
+
+#[gcode_macro FILAMENT_RUNOUT]
+#description: "Handles filament runout with basic filament change and resumption"
+#variable_pause_on_runout: True
+#gcode:
+#    # Check if pause on runout is enabled
+#    {% if printer["gcode_macro FILAMENT_RUNOUT"].pause_on_runout %}
+#        {action_respond_info("Filament Runout Detected! Pausing print...")}
+#
+#        # Save the current extruder position
+#        SAVE_GCODE_STATE NAME=runout_state
+#
+#        # Pause the print
+#        PAUSE
+#        G91                    ; Switch to relative positioning
+#        G1 Z10 F300            ; Raise the Z axis by 10mm for clearance
+#        G90                    ; Return to absolute positioning
+#
+#        # Notify the user
+#        M117 "Replace filament and resume"
+#
+#        # Wait until filament is reinserted
+#        {action_respond_info("Waiting for filament insertion...")}
+#    {% else %}
+#        {action_respond_info("Filament Runout Detected! No pause configured.")}
+#    {% endif %}
+
+# Insert gcode for resuming print after filament reinserted
+#[gcode_macro FILAMENT_INSERTED]
+#description: "Resumes the print once filament is reinserted"
+#gcode:
+#    # Notify user about filament insertion
+#    {action_respond_info("Filament Inserted! Resuming print...")}
+#
+#    # Resume print only if PAUSE was previously called
+#    {% if pause_on_runout %}
+#        # Restore the previous G-code state
+#        RESTORE_GCODE_STATE NAME=runout_state MOVE=1
+#
+#        # Resume the print
+#        RESUME
+#    {% else %}
+#        {action_respond_info("No previous pause detected. Skipping resume sequence.")}
+#    {% endif %}
