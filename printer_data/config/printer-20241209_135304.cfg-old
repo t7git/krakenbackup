@@ -1,7 +1,3 @@
-[include mmu/base/*.cfg]
-[include mmu/optional/client_macros.cfg]
-[include mmu/addons/blobifier.cfg]
-[include mmu/addons/mmu_erec_cutter.cfg]
 # 3D Printer Configuration for Klipper
 # This configuration is for the BTT Kraken board and its associated components.
 # Ensure you have all hardware connected as specified in the configurations.
@@ -12,7 +8,7 @@
 #[include /home/t7/klipper_config/macros.cfg]
 [include /home/t7/klipper_config/misc.cfg]
 [include /home/t7/klipper_config/printer_info.cfg]
-#[include /home/t7/klipper_config/servo.cfg]
+[include /home/t7/klipper_config/servo.cfg]
 #[include /home/t7/klipper_config/btt_ebb42.cfg]
 [include /home/t7/klipper_config/board_pins.cfg]
 [include /home/t7/klipper_config/fans_and_leds.cfg]
@@ -45,11 +41,7 @@
 #[include /home/t7/klipper_config/fans.cfg]
 [include /home/t7/klipper_config/dynamicmacros.cfg]
 [include /home/t7/klipper_config/dynamicmacros]
-#[include /home/t7/3ms/main.cfg]
-[include /home/t7/Klipper-Adaptive-Meshing-Purging/Configuration/Smart_Park.cfg]
-[include /home/t7/Klipper-Adaptive-Meshing-Purging/Configuration/Line_Purge.cfg]
-[include /home/t7/Klipper-Adaptive-Meshing-Purging/Configuration/Adaptive_Meshing.cfg]
-[include /home/t7/Klipper-Adaptive-Meshing-Purging/Configuration/KAMP_Settings.cfg]
+[include /home/t7/3ms/main.cfg]
 
 #*# <---------------------- SAVE_CONFIG ---------------------->
 #*# DO NOT EDIT THIS BLOCK OR BELOW. The contents are auto-generated.
